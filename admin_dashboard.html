@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin Dashboard</title>
+  <link rel="stylesheet" href="admin.css">
+     
+</head>
+<body>
+  <div class="container">
+    <!-- Top Links -->
+    <div class="top-links">
+      <a href="bill.html" class="bill">Bill rates</a>
+      <a href="message_contact.html" class="contact">Contact us message</a>
+      <div class="logout" onclick="logout()">🔓 Log Out</div>
+    </div>
+    
+    <h2>Admin Dashboard</h2>
+    <button class="btn-add" onclick="openModal()">➕ Add User</button>
+
+    <div class="filter-bar">
+      <select id="roleFilter">
+        <option value="all">All Roles</option>
+        <option value="residence">Residence</option>
+        <option value="employee">Employee</option>
+      </select>
+      <input type="text" id="searchInput" placeholder="Search by username..."/>
+    </div>
+    <div class="user-list" id="userList"></div>
+  </div>
+
+  <!-- Modal Form -->
+  <div class="modal" id="userModal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal()">&times;</span>
+      <h3 id="modalTitle">Add User</h3>
+      <form id="userForm">
+        <input type="text" id="username" placeholder="Username" required/>
+        <input type="password" id="password" placeholder="Password" required/>
+        <select id="role" required>
+          <option value="">Select Role</option>
+          <option value="admin">Admin</option>
+          <option value="employee">Employee</option>
+          <option value="residence">Residence</option>
+        </select>
+        <div id="residencePaths" style="display: none;">
+          <input type="text" id="customID" placeholder="Custom Residence ID (optional)" /><br>
+          <br><br>
+          <input type="text" id="sensorRoot" placeholder="Sensor Root (e.g., sensors2)" />
+        </div>
+        <button type="submit">Save</button>
+      </form>
+      <div class="success" id="messageBox"></div>
+    </div>
+  </div>
+
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+
+  <script>
+    const firebaseConfig = {
+      databaseURL: "https://waterbase-b1393-default-rtdb.asia-southeast1.firebasedatabase.app/"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
+
+    let editUserId = null, usersData = {};
+
+    // Show/hide sensor root input for residence role
+    document.getElementById("role").addEventListener("change", e => {
+      document.getElementById("residencePaths").style.display = e.target.value === "residence" ? "block" : "none";
+    });
+
+    // Modal functions
+    function openModal(edit = false) {
+      document.getElementById("userModal").style.display = "flex";
+      document.getElementById("modalTitle").innerText = edit ? "Edit User" : "Add User";
+    }
+    function closeModal() {
+      document.getElementById("userModal").style.display = "none";
+      document.getElementById("userForm").reset();
+      editUserId = null;
+    }
+
+    document.getElementById("userForm").addEventListener("submit", e => {
+      e.preventDefault();
+      const u = document.getElementById("username").value.trim();
+      const p = document.getElementById("password").value.trim();
+      const r = document.getElementById("role").value; 
+    
+      const root = document.getElementById("sensorRoot").value.trim();
+      const customID = document.getElementById("customID").value.trim();
+
+      if (!u || !p || !r) return showMsg("❌ All fields are required");
+
+      // Reference for new or existing user
+      let userRef;
+      if(editUserId) {
+        userRef = db.ref("users/" + editUserId);
+      } else {
+        if (customID) {
+          userRef = db.ref("users/" + customID);
+          editUserId = customID;
+        } else {
+          userRef = db.ref("users").push();
+          editUserId = userRef.key;
+        }
+      }
+
+      const userData = { username: u, password: p, role: r };
+
+      if (r === "residence") {
+        if (!root) return showMsg("❌ Sensor root is required");
+
+        const sensorPath = `${root}/${editUserId}/water_timer_counter/value`;
+        const logPath = `${root}/${editUserId}/water_timer_counter/logs`;
+        const switchPath = `${root}/${editUserId}/control_switch/value`;
+        const alertPath = `${root}/${editUserId}/water_alerts`;
+
+        Object.assign(userData, { sensorPath, logPath, switchPath, alertPath, total_bill: 0 });
+
+        if(!usersData[editUserId]) {
+          const sensorData = {
+            water_timer_counter: { value: 0, logs: {} },
+            control_switch: { value: true },
+            water_alerts: {}
+          };
+          db.ref(`${root}/${editUserId}`).set(sensorData);
+        }
+      }
+
+      userRef.set(userData).then(() => {
+        showMsg("✅ Saved successfully");
+        closeModal();
+        loadUsers();
+      });
+    });
+
+    function showMsg(msg) {
+      const box = document.getElementById("messageBox");
+      box.innerText = msg;
+      setTimeout(() => { box.innerText = ""; }, 3000);
+    }
+
+    function loadUsers() {
+      db.ref("users").once("value").then(snap => {
+        usersData = snap.val() || {};
+        renderUsers();
+      });
+    }
+
+    function renderUsers() {
+      const userList = document.getElementById("userList");
+      const rf = document.getElementById("roleFilter").value;
+      const sw = document.getElementById("searchInput").value.toLowerCase();
+      userList.innerHTML = "<h3>Registered Users:</h3>";
+      let found = 0;
+      for (const id in usersData) {
+        const u = usersData[id];
+        if ((rf === "all" || u.role === rf) && u.username.toLowerCase().includes(sw)) {
+          found++;
+          const info = u.role === "residence" ? `
+            <div style="font-size:12px;opacity:0.6">
+              📡 Sensor: ${u.sensorPath}<br>
+              📝 Log: ${u.logPath}<br>
+              🔌 Switch: ${u.switchPath}<br>
+              🚨 Alert: ${u.alertPath}<br>
+              💵 Total Bill: ₱${u.total_bill || 0}
+            </div>` : "";
+          userList.innerHTML += `
+            <div class="user-item">
+              <span><strong>${u.username}</strong> (${u.role})</span>
+              <span style="opacity:0.6">${u.password}</span>
+              ${info}
+              <div class="actions">
+                <button class="edit" onclick="editUser('${id}')">Edit</button>
+                <button class="delete" onclick="deleteUser('${id}')">Delete</button>
+                ${u.role === "residence" ? `<button class="reset" onclick="resetBill('${id}')">Reset Bill</button>` : ""}
+              </div>
+            </div>`;
+        }
+      }
+      if (!found) userList.innerHTML += "<p>No users found.</p>";
+    }
+
+    function resetBill(userId) {
+      if (confirm(`Reset Total Bill for user ${userId}?`)) {
+        db.ref("users/" + userId + "/total_bill").set(0)
+          .then(() => {
+            showMsg(`🔄 Total Bill reset for ${userId}`);
+            loadUsers();
+          })
+          .catch(err => {
+            console.error("Reset failed:", err);
+            showMsg("❌ Failed to reset bill");
+          });
+      }
+    }
+
+    function editUser(id) {
+      const u = usersData[id];
+      if (!u) return showMsg("❌ User not found");
+      openModal(true);
+
+      document.getElementById("username").value = u.username;
+      document.getElementById("password").value = u.password;
+      document.getElementById("role").value = u.role;
+      document.getElementById("residencePaths").style.display = u.role === "residence" ? "block" : "none";
+
+      if (u.sensorPath) {
+        document.getElementById("sensorRoot").value = u.sensorPath.split("/")[0];
+      }
+      document.getElementById("customID").value = id;
+      editUserId = id;
+    }
+
+    function deleteUser(id) {
+      if (confirm("Delete this user?")) {
+        db.ref("users/" + id).remove().then(() => {
+          showMsg("🗑️ Deleted");
+          loadUsers();
+        });
+      }
+    }
+
+    function logout() {
+      localStorage.clear();
+      window.location.href = "index.html";
+    }
+
+    document.getElementById("roleFilter").addEventListener("change", renderUsers);
+    document.getElementById("searchInput").addEventListener("input", renderUsers);
+
+    loadUsers();
+  </script>
+</body>
+</html>

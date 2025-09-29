@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Residence Water Flow Dashboard</title>
+  <link rel="stylesheet" href="residence.css">
+
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+
+  <!-- Styles -->
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0; 
+      background: #121212;
+      color: #eee;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2rem 1rem 3rem;
+      min-height: 100vh;
+    }
+
+    /* Top bar */
+    .top-bar {
+      width: 100%;
+      max-width: 960px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    /* Notification button */
+    .notif-button {
+      position: relative;
+      background: #1f2937;
+      border: 1.5px solid #4f46e5;
+      color: #a5b4fc;
+      font-weight: 600;
+      font-size: 1rem;
+      padding: 0.6rem 1.2rem;
+      border-radius: 9999px;
+      cursor: pointer;
+      user-select: none;
+      transition: background-color 0.25s ease, color 0.25s ease;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+    .notif-button:hover,
+    .notif-button:focus {
+      background: #4f46e5;
+      color: #eef2ff;
+      outline: none;
+    }
+
+    /* Notification count badge */
+    .notif-count {
+      background: #ef4444;
+      color: white;
+      font-weight: 700;
+      font-size: 0.75rem;
+      padding: 0.15rem 0.45rem;
+      border-radius: 9999px;
+      min-width: 1.3rem;
+      text-align: center;
+      line-height: 1;
+      user-select: none;
+    }
+
+    /* Notification popup */
+    .notif-popup {
+      position: absolute;
+      top: 3.4rem;
+      left: 0;
+      width: 320px;
+      max-height: 340px;
+      background: #1e293b;
+      border-radius: 0.5rem;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.7);
+      overflow-y: auto;
+      padding: 0.8rem 0;
+      font-size: 0.9rem;
+      display: none;
+      z-index: 1000;
+    }
+    .notif-popup ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+    .notif-popup li {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: #cbd5e1;
+      padding: 0.5rem 1.2rem;
+      border-bottom: 1px solid #334155;
+    }
+    .notif-popup li button {
+      background: #ef4444;
+      border: none;
+      padding: 0.3rem 0.7rem;
+      border-radius: 0.4rem;
+      color: white;
+      font-size: 0.75rem;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+    }
+    .notif-popup li button:hover {
+      background: #b91c1c;
+    }
+
+    /* Logout button */
+    .logout-button {
+      margin-left: auto;
+      background: #dc2626;
+      border: none;
+      padding: 0.7rem 1.5rem;
+      font-size: 1rem;
+      color: #fff;
+      border-radius: 0.75rem;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 6px 12px rgb(220 38 38 / 0.6);
+      transition: background-color 0.3s ease;
+    }
+    .logout-button:hover,
+    .logout-button:focus {
+      background: #b91c1c;
+      outline: none;
+    }
+
+    /* Heading */
+    h1#welcomeMessage {
+      font-weight: 700;
+      font-size: 2.25rem;
+      margin-bottom: 3rem;
+      color: #6366f1;
+      user-select: none;
+      text-align: center;
+    }
+
+    .meter-circle {
+      width: 320px;
+      height: 320px;
+      border-radius: 50%;
+      background: radial-gradient(circle at center, #3b82f6 45%, #2563eb 90%);
+      box-shadow:
+        inset 0 0 30px #60a5fa,
+        0 0 60px #2563eb;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      position: relative;
+      user-select: none;
+      margin-bottom: 3rem;
+      transition: background 0.5s ease, box-shadow 0.5s ease;
+    }
+    .meter-circle.flowing {
+      background: radial-gradient(circle at center, #22c55e 45%, #16a34a 90%);
+      box-shadow:
+        inset 0 0 30px #4ade80,
+        0 0 60px #16a34a;
+    }
+    .meter-circle .label {
+      position: absolute;
+      top: 30px;
+      font-weight: 600;
+      font-size: 1.1rem;
+      letter-spacing: 3px;
+      color: #bfdbfe;
+      text-transform: uppercase;
+    }
+    .meter-circle .reading {
+      font-size: 4.5rem;
+      font-weight: 700;
+      letter-spacing: 0.25em;
+      text-shadow: 0 0 8px #93c5fd;
+    }
+    .meter-circle .unit {
+      margin-top: 0.5rem;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #bfdbfe;
+    }
+
+    /* Switch container */
+    .switch-container {
+      background: #1e293b;
+      padding: 1.5rem 2rem;
+      border-radius: 1rem;
+      box-shadow: 0 10px 25px rgb(59 130 246 / 0.4);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 320px;
+      gap: 1.5rem;
+      user-select: none;
+    }
+    .switch-container p {
+      font-weight: 600;
+      font-size: 1.15rem;
+      color: #e0e7ff;
+      margin: 0;
+      user-select: none;
+    }
+
+    /* Sliding toggle switch */
+    .toggle-switch {
+      position: relative;
+      width: 60px;
+      height: 34px;
+      display: inline-block;
+    }
+    .toggle-switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-color: #4b5563;
+      border-radius: 34px;
+      transition: background-color 0.3s ease;
+      box-shadow: inset 0 0 5px rgba(0,0,0,0.3);
+    }
+    .slider::before {
+      position: absolute;
+      content: "";
+      height: 26px; width: 26px;
+      left: 4px; bottom: 4px;
+      background-color: #f3f4f6;
+      border-radius: 50%;
+      transition: transform 0.3s ease, background-color 0.3s ease;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.25);
+    }
+    .toggle-switch input:checked + .slider {
+      background-color: #3b82f6;
+    }
+    .toggle-switch input:checked + .slider::before {
+      transform: translateX(26px);
+      background-color: white;
+    }
+
+    /* Alert box */
+    #alertBox {
+      max-width: 320px;
+      background: #b91c1c;
+      color: white;
+      border-radius: 0.6rem;
+      padding: 1rem 1.2rem;
+      font-weight: 600;
+      box-shadow: 0 6px 15px rgb(185 28 28 / 0.7);
+      display: none;
+      text-align: center;
+      user-select: none;
+      margin-top: 1rem;
+    }
+
+    /* Chat popup */
+    .chat-popup {
+      display: none;
+      position: fixed;
+      bottom: 80px;
+      right: 20px;
+      width: 340px;
+      background: #1e293b;
+      border-radius: 12px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.6);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    .chat-header {
+      background: #3b82f6;
+      color: white;
+      padding: 12px 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: 600;
+    }
+    .chat-messages {
+      flex: 1;
+      padding: 12px;
+      overflow-y: auto;
+      max-height: 280px;
+      color: #e0e7ff;
+    }
+    .chat-messages div {
+      margin-bottom: 10px;
+      padding: 10px 14px;
+      border-radius: 12px;
+      max-width: 75%;
+      word-wrap: break-word;
+    }
+    .chat-messages .sent { background: #2563eb; color: white; margin-left: auto; }
+    .chat-messages .received { background: #374151; color: #e5e7eb; margin-right: auto; }
+    .chat-form { display: flex; border-top: 1px solid #374151; }
+    .chat-form input {
+      flex: 1; padding: 10px; border: none;
+      background: #111827; color: white; outline: none;
+    }
+    .chat-form button {
+      background: #3b82f6; border: none;
+      color: white; padding: 10px 15px; cursor: pointer;
+    }
+    .close-btn {
+      background: none; border: none; color: white; font-size: 18px; cursor: pointer;
+    }
+
+    /* Responsive */
+    @media (max-width: 400px) {
+      .meter-circle {
+        width: 90vw;
+        height: 90vw;
+      }
+      .meter-circle .reading {
+        font-size: 12vw;
+      }
+      .switch-container, .top-bar {
+        width: 90vw;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+      .logout-button {
+        margin-left: 0;
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Bar -->
+  <div class="top-bar">
+    <div style="position: relative;">
+      <button class="notif-button" id="notifBtn">
+        Notifications
+        <span class="notif-count" id="notifCount">0</span>
+      </button>
+      <div class="notif-popup" id="notifPopup">
+        <ul id="notifList"></ul>
+      </div>
+    </div>
+   <a class="logout-button" href="viewer.html">Bill rates</a>
+<a class="logout-button" id="messagesBtn">Messages</a>
+<button class="logout-button" id="logoutBtn">Logout</button>
+
+
+  </div>
+
+  <!-- Welcome Message -->
+  <h1 id="welcomeMessage">Welcome, Residence</h1>
+
+  <!-- Water Meter -->
+  <div class="meter-circle">
+    <div class="label">Object Count</div>
+    <div class="reading" id="counterDisplay">00000</div>
+    <div class="unit">entries</div>
+  </div>
+
+  <!-- Switch Container -->
+  <div class="switch-container">
+    <p id="switchStatus">Switch Status: Loading...</p>
+    <label class="toggle-switch">
+      <input type="checkbox" id="switchInput" />
+      <span class="slider"></span>
+    </label>
+  </div>
+
+  <!-- Bill Summary Card -->
+<div id="billCard" style="
+  max-width: 400px;
+  background: #1e293b;
+  padding: 1.5rem;
+  border-radius: 1rem;
+  margin-top: 2rem;
+  color: #e0e7ff;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.6);
+">
+  <h2 style="margin:0 0 1rem; color:#38bdf8;">Water Bill Summary</h2>
+  <p><strong>Consumption:</strong> <span id="billConsumption">0</span> </p>
+  <p><strong>Total Bill:</strong> <span id="billAmount">0.00</span></p>
+</div>
+
+  <!-- Alert Box -->
+  <div id="alertBox"></div>
+
+  <!-- Chat Popup -->
+  <div id="chatPopup" class="chat-popup">
+    <div class="chat-header">
+      <span>Chat with Admin</span>
+      <button id="closeChat" class="close-btn">×</button>
+    </div>
+    <div id="chatMessages" class="chat-messages"></div>
+    <form id="chatForm" class="chat-form">
+      <input type="text" id="chatInput" placeholder="Type a message..." required />
+      <button type="submit">Send</button>
+    </form>
+  </div>
+
+  <!-- JavaScript -->
+  <script>
+    // Firebase config
+    const firebaseConfig = {
+      apiKey: "AIzaSyDXNrUVM1VBaXOg2ZmkIFE9BKxexxBmpIs",
+      authDomain: "waterbase-b1393.firebaseapp.com",
+      databaseURL: "https://waterbase-b1393-default-rtdb.asia-southeast1.firebasedatabase.app/",
+    };
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
+
+    // Paths and Elements
+    const sensorPath = localStorage.getItem("sensorPath") || "/sensors1/water_timer_counter/value";
+    const switchPath = localStorage.getItem("switchPath") || "/sensors1/control_switch/value";
+    const alertPath  = localStorage.getItem("alertPath")  || "/sensors1/water_alerts";
+    const username = localStorage.getItem("username") || "Residence";
+    const currentUser = username;
+
+    document.getElementById("welcomeMessage").innerText = `Welcome, ${username}`;
+
+    const switchRef = db.ref(switchPath);
+    const alertsRef = db.ref(alertPath);
+    const switchStatus = document.getElementById("switchStatus");
+    const switchInput = document.getElementById("switchInput");
+    const alertBox = document.getElementById("alertBox");
+    const notifList = document.getElementById("notifList");
+    const notifPopup = document.getElementById("notifPopup");
+    const notifCount = document.getElementById("notifCount");
+    const notifBtn = document.getElementById("notifBtn");
+    const logoutBtn = document.getElementById("logoutBtn");
+    const meterCircle = document.querySelector('.meter-circle');
+
+    let lastValue = null;
+    let notifPopupOpen = false;
+    let flowTimeout;
+    const lastSeenTimestampKey = "lastSeenTimestamp";
+
+    if (!localStorage.getItem(lastSeenTimestampKey)) {
+      localStorage.setItem(lastSeenTimestampKey, Date.now());
+      localStorage.setItem("unseenCount", 0);
+    }
+
+    let unseenCount = Number(localStorage.getItem("unseenCount")) || 0;
+    notifCount.innerText = unseenCount;
+
+    // Toggle notification popup
+    notifBtn.addEventListener("click", () => {
+      notifPopupOpen = !notifPopupOpen;
+      notifPopup.style.display = notifPopupOpen ? "block" : "none";
+
+      if (notifPopupOpen) {
+        unseenCount = 0;
+        notifCount.innerText = unseenCount;
+        localStorage.setItem("unseenCount", unseenCount);
+        localStorage.setItem(lastSeenTimestampKey, Date.now());
+      }
+    });
+
+    // Logout
+    logoutBtn.addEventListener("click", () => {
+      localStorage.clear();
+      window.location.href = "index.html";
+    });
+
+    // Listen to switch changes
+    switchRef.on("value", snap => {
+      const val = snap.val();
+      if (val === true || val === "true" || val === 1) {
+        switchStatus.textContent = "Switch Status: ON";
+        switchInput.checked = true;
+      } else {
+        switchStatus.textContent = "Switch Status: OFF";
+        switchInput.checked = false;
+      }
+    });
+
+    // Toggle switch
+    switchInput.addEventListener("change", () => {
+      switchRef.set(switchInput.checked);
+    });
+
+    // Water meter logic
+    db.ref(sensorPath).on("value", snap => {
+      const val = Number(snap.val()) || 0;
+      document.getElementById("counterDisplay").innerText = String(val).padStart(5, "0");
+
+      if (lastValue === null) {
+        lastValue = val;
+        return;
+      }
+
+      if (val > lastValue) {
+        meterCircle.classList.add('flowing');
+        clearTimeout(flowTimeout);
+        flowTimeout = setTimeout(() => {
+          meterCircle.classList.remove('flowing');
+        }, 2000);
+
+        const lastAlerted = Number(localStorage.getItem("lastAlertedPulses")) || 0;
+
+        switchRef.get().then(snapSwitch => {
+          const switchVal = snapSwitch.val();
+          if ((!switchVal || switchVal === "false" || switchVal === 0) && val !== lastAlerted) {
+            alertsRef.push({
+              message: "Water leak detected",
+              pulses: val,
+              timestamp: Date.now(),
+            });
+            localStorage.setItem("lastAlertedPulses", val);
+          }
+        });
+      }
+
+      lastValue = val;
+    });
+
+    // Notifications UI
+    alertsRef.on("value", snap => {
+      const alerts = snap.val() || {};
+      const alertEntries = Object.entries(alerts);
+      alertEntries.sort((a, b) => b[1].timestamp - a[1].timestamp);
+      notifList.innerHTML = "";
+      const lastSeen = Number(localStorage.getItem(lastSeenTimestampKey)) || 0;
+      let newUnseenCount = 0;
+
+      alertEntries.forEach(([key, alert]) => {
+        const li = document.createElement("li");
+        li.textContent = `${alert.message} (${alert.pulses} pulses)`;
+        const dismissBtn = document.createElement("button");
+        dismissBtn.textContent = "Dismiss";
+        dismissBtn.addEventListener("click", () => {
+          alertsRef.child(key).remove();
+        });
+        li.appendChild(dismissBtn);
+        notifList.appendChild(li);
+
+        if (alert.timestamp > lastSeen) {
+          newUnseenCount++;
+        }
+      });
+
+      if (!notifPopupOpen && newUnseenCount > 0) {
+        unseenCount = newUnseenCount;
+        notifCount.innerText = unseenCount;
+        localStorage.setItem("unseenCount", unseenCount);
+      }
+    });
+
+    // Show most recent alert
+    alertsRef.limitToLast(1).on("child_added", snap => {
+      const alert = snap.val();
+      alertBox.textContent = alert.message + " (" + alert.pulses + " pulses)";
+      alertBox.style.display = "block";
+      setTimeout(() => { alertBox.style.display = "none"; }, 5000);
+    });
+
+  // ==== CHAT FEATURE ====
+const chatPopup = document.getElementById("chatPopup");
+const closeChat = document.getElementById("closeChat");
+const chatForm = document.getElementById("chatForm");
+const chatInput = document.getElementById("chatInput");
+const chatMessages = document.getElementById("chatMessages");
+const messagesBtn = document.getElementById("messagesBtn");
+
+// Match Firebase JSON structure: "Residence_Employee"
+const chatRoom = `${currentUser}_Employee`;
+const chatRef = db.ref(`chats/${chatRoom}`);
+
+// Open chat when Messages button clicked
+messagesBtn.addEventListener("click", () => {
+  chatPopup.style.display = "flex";
+});
+
+// Close chat
+closeChat.addEventListener("click", () => {
+  chatPopup.style.display = "none";
+});
+
+// Send message
+chatForm.addEventListener("submit", e => {
+  e.preventDefault();
+  const msg = chatInput.value.trim();
+  if (!msg) return;
+  chatRef.push({ sender: currentUser, text: msg, timestamp: Date.now() });
+  chatInput.value = "";
+});
+
+// Receive messages (Residence + Employee)
+chatRef.on("child_added", snap => {
+  const msg = snap.val();
+  const div = document.createElement("div");
+  div.className = msg.sender === currentUser ? "sent" : "received";
+  div.textContent = `${msg.sender}: ${msg.text}`;
+  chatMessages.appendChild(div);
+  chatMessages.scrollTop = chatMessages.scrollHeight;
+});
+
+  // Notifications UI
+    alertsRef.on("value", snap => {
+      const alerts = snap.val() || {};
+      const alertEntries = Object.entries(alerts);
+      alertEntries.sort((a, b) => b[1].timestamp - a[1].timestamp);
+      notifList.innerHTML = "";
+      const lastSeen = Number(localStorage.getItem(lastSeenTimestampKey)) || 0;
+      let newUnseenCount = 0;
+
+      alertEntries.forEach(([key, alert]) => {
+        const dateStr = new Date(alert.timestamp).toLocaleString();
+        const li = document.createElement("li");
+        li.textContent = `${alert.message} at ${dateStr}`;
+        const delBtn = document.createElement("button");
+        delBtn.textContent = "×";
+        delBtn.setAttribute("aria-label", "Delete alert");
+        delBtn.addEventListener("click", () => {
+          alertsRef.child(key).remove();
+        });
+        li.appendChild(delBtn);
+        notifList.appendChild(li);
+        if (alert.timestamp > lastSeen) newUnseenCount++;
+      });
+
+      if (!notifPopupOpen) {
+        unseenCount = newUnseenCount;
+        notifCount.innerText = unseenCount;
+        localStorage.setItem("unseenCount", unseenCount);
+      }
+    });
+
+    alertsRef.limitToLast(1).on("child_added", snap => {
+      const alert = snap.val();
+      if (!alert) return;
+
+      alertBox.textContent = alert.message;
+      alertBox.style.display = "block";
+      setTimeout(() => {
+        alertBox.style.display = "none";
+      }, 4000);
+
+      // Browser Notification
+      async function fireSystemNotification(title, message) {
+        if (!("Notification" in window)) return;
+        if (Notification.permission === "granted") {
+          const reg = await navigator.serviceWorker.getRegistration();
+          if (reg) {
+            reg.showNotification(title, {
+              body: message,
+              icon: "https://cdn-icons-png.flaticon.com/512/1827/1827392.png",
+              vibrate: [100, 50, 100],
+              tag: "water-alert",
+              renotify: true,
+            });
+          }
+        }
+      }
+
+      // Call the notification
+      fireSystemNotification("Water Leak Detected", alert.message);
+    });
+
+    // Request notification permission
+    if ("Notification" in window && Notification.permission !== "granted") {
+      Notification.requestPermission();
+    }
+
+    // Register Service Worker
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker
+        .register("sw.js")
+        .then(reg => {
+          console.log("Service Worker registered", reg.scope);
+        })
+        .catch(err => {
+          console.error("Service Worker registration failed", err);
+        });
+    }
+    // === Billing System ===
+  let currentRates = null;
+  let currentConsumption = 0;
+
+  // Load rates
+  db.ref("residential_water_rates").on("value", snap => {
+    currentRates = snap.val();
+    updateBill();
+  });
+
+  // Load consumption (already cubic meters)
+  db.ref(sensorPath).on("value", snap => {
+    currentConsumption = Number(snap.val()) || 0;
+    updateBill();
+  });
+
+  function calculateBill(consumption) {
+    if (!currentRates) return 0;
+    let bill = 0;
+
+    if (consumption <= 5) {
+      bill = parseFloat(currentRates.r0_5);
+    } else if (consumption <= 10) {
+      bill = parseFloat(currentRates.r0_5);
+      for (let i = 6; i <= consumption; i++) {
+        bill += parseFloat(currentRates["r" + i]);
+      }
+    } else {
+      bill = parseFloat(currentRates.r0_5);
+      for (let i = 6; i <= 10; i++) {
+        bill += parseFloat(currentRates["r" + i]);
+      }
+      if (consumption > 10) {
+        let extra = Math.min(consumption, 20) - 10;
+        bill += extra * parseFloat(currentRates.r11_20);
+      }
+      if (consumption > 20) {
+        let extra = Math.min(consumption, 30) - 20;
+        bill += extra * parseFloat(currentRates.r21_30);
+      }
+      if (consumption > 30) {
+        let extra = Math.min(consumption, 40) - 30;
+        bill += extra * parseFloat(currentRates.r31_40);
+      }
+      if (consumption > 40) {
+        let extra = Math.min(consumption, 50) - 40;
+        bill += extra * parseFloat(currentRates.r41_50);
+      }
+      if (consumption > 50) {
+        let extra = consumption - 50;
+        bill += extra * parseFloat(currentRates.r51_up);
+      }
+    }
+    return bill;
+  }
+
+  function updateBill() {
+    if (!currentRates) return;
+    const bill = calculateBill(currentConsumption);
+    document.getElementById("billConsumption").textContent = currentConsumption + " m³";
+    document.getElementById("billAmount").textContent = "₱" + bill.toFixed(2);
+  }
+
+  </script>
+</body>
+</html>
