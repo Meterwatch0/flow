@@ -13,115 +13,139 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <style>
-body {
-  font-family: 'Segoe UI', sans-serif;
-  background: linear-gradient(135deg,#0f172a,#1e293b);
-  color: #e2e8f0;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  padding:2rem;
-  min-height:100vh;
-}
+  :root {
+    --bg-dark: #000000;
+    --card-bg: rgba(20, 20, 20, 0.8);
+    --accent1: #ff006a;
+    --accent2: #ffcc70;
+    --text-light: #f1f1f1;
+    --gradient: linear-gradient(135deg, var(--accent1), var(--accent2));
+  }
 
-h1 {
-  color:#60a5fa;
-  margin-bottom:1.5rem;
-}
+  body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background: var(--bg-dark);
+    color: var(--text-light);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 16px;
+    min-height: 100vh;
+  }
 
-canvas {
-  background: rgba(30,41,59,0.85);
-  border-radius:1rem;
-  box-shadow:0 6px 18px rgba(0,0,0,0.5);
-  padding:1rem;
-  max-width:800px;
-  width:100%;
-  margin-bottom:2rem;
-}
+  h1 {
+    font-size: 1.6rem;
+    text-align: center;
+    background: var(--gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 1rem;
+  }
 
-.back-btn {
-  padding:0.6rem 1.2rem;
-  background:#3b82f6;
-  border:none;
-  border-radius:8px;
-  color:white;
-  font-weight:600;
-  cursor:pointer;
-  transition:0.3s;
-  margin-bottom:2rem;
-}
-.back-btn:hover { background:#2563eb; }
+  .chart-container {
+    width: 100%;
+    max-width: 500px;
+    background: var(--card-bg);
+    border-radius: 16px;
+    box-shadow: 0 0 20px rgba(255,255,255,0.1);
+    padding: 10px;
+    margin-bottom: 1.5rem;
+  }
 
-/* ===== Tips Section ===== */
-.tips-container-wrapper {
-  max-width:800px;
-  width:100%;
-  background: rgba(15,23,42,0.85);
-  padding:1.5rem 2rem;
-  border-radius:12px;
-  box-shadow:0 10px 30px rgba(0,0,0,0.6);
-  text-align:center;
-  margin-bottom:2rem;
-}
+  canvas {
+    width: 100% !important;
+    height: 250px !important;
+  }
 
-.button-tips {
-  background: linear-gradient(90deg,#60a5fa,#34d399);
-  color:#0f172a;
-  font-weight:bold;
-  padding:0.7rem 1.5rem;
-  border:none;
-  border-radius:50px;
-  cursor:pointer;
-  font-size:1rem;
-  transition: all 0.3s ease;
-  margin-bottom:1rem;
-}
+  .back-btn {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    background: var(--gradient);
+    border: none;
+    color: white;
+    font-size: 14px;
+    padding: 10px 14px;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+  .back-btn:hover {
+    opacity: 0.8;
+    transform: scale(1.05);
+  }
 
-.button-tips:hover {
-  transform: scale(1.05);
-  box-shadow: 0 5px 15px rgba(0,255,200,0.4);
-}
+  .tips-container-wrapper {
+    width: 100%;
+    max-width: 500px;
+    text-align: center;
+  }
 
-.tips-container {
-  display:none;
-  margin-top:1rem;
-  text-align:left;
-}
+  .button-tips {
+    background: var(--gradient);
+    border: none;
+    color: white;
+    padding: 12px 18px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: bold;
+    width: 100%;
+    margin-bottom: 12px;
+    transition: all 0.3s ease;
+  }
 
-.tip {
-  background: rgba(52,211,153,0.1);
-  margin:0.5rem 0;
-  padding:0.8rem 1rem;
-  border-left:4px solid #34d399;
-  border-radius:8px;
-  transition: transform 0.3s ease;
-}
+  .button-tips:hover {
+    transform: scale(1.03);
+    box-shadow: 0 0 15px var(--accent1);
+  }
 
-.tip:hover {
-  transform: translateX(5px);
-  background: rgba(52,211,153,0.2);
-}
+  .tips-container {
+    display: none;
+    background: var(--card-bg);
+    border-radius: 12px;
+    padding: 10px;
+    box-shadow: 0 0 15px rgba(255,255,255,0.1);
+  }
+
+  .tip {
+    margin: 8px 0;
+    font-size: 14px;
+    border-left: 3px solid var(--accent1);
+    padding-left: 8px;
+    text-align: left;
+  }
+
+  /* Responsive for phones */
+  @media (max-width: 600px) {
+    h1 { font-size: 1.4rem; }
+    .back-btn { font-size: 12px; padding: 8px 12px; }
+    canvas { height: 200px !important; }
+    .tip { font-size: 13px; }
+  }
 </style>
 </head>
 <body>
 
+<button class="back-btn" onclick="window.location.href='residence_dashboard.html'">← Back</button>
+
 <h1>Water Usage Analytics</h1>
 
-<canvas id="usageChart"></canvas>
+<div class="chart-container">
+  <canvas id="usageChart"></canvas>
+</div>
 
-<button class="back-btn" onclick="window.location.href='residence_dashboard.html'">← Back to Dashboard</button>
-
-<!-- Water Saving Tips Section -->
 <div class="tips-container-wrapper">
   <button class="button-tips" id="showTipsBtn">Show Tips to Save Water</button>
   <div class="tips-container" id="tipsContainer">
     <div class="tip">🚿 Take shorter showers – aim for under 5 minutes.</div>
-    <div class="tip">💧 Turn off the tap while brushing your teeth or washing dishes.</div>
-    <div class="tip">♻️ Reuse water from washing vegetables to water plants.</div>
-    <div class="tip">🚰 Fix leaks immediately – even small drips waste gallons.</div>
-    <div class="tip">🌱 Water plants early in the morning or late evening to reduce evaporation.</div>
-    <div class="tip">🧺 Run washing machines and dishwashers only with full loads.</div>
-    <div class="tip">💡 Install water-saving fixtures like low-flow faucets and showerheads.</div>
+    <div class="tip">💧 Turn off the tap while brushing your teeth.</div>
+    <div class="tip">♻️ Reuse water from washing veggies to water plants.</div>
+    <div class="tip">🚰 Fix leaks immediately – small drips waste gallons.</div>
+    <div class="tip">🌱 Water plants early or late to reduce evaporation.</div>
+    <div class="tip">🧺 Run washers only when full.</div>
+    <div class="tip">💡 Install low-flow faucets & showerheads.</div>
   </div>
 </div>
 
@@ -151,24 +175,33 @@ function renderChart(labels, data) {
       datasets: [{
         label: "Monthly Water Consumption (Liters)",
         data: data,
-        backgroundColor: "rgba(59,130,246,0.6)",
-        borderColor: "#3b82f6",
+        backgroundColor: "rgba(255, 0, 106, 0.6)",
+        borderColor: "#ff006a",
         borderWidth: 1,
+        borderRadius: 6,
       }]
     },
     options: {
       responsive: true,
+      maintainAspectRatio: false,
       scales: {
-        y: { beginAtZero: true, title:{ display:true, text:"Liters" } },
-        x: { title:{ display:true, text:"Month" } }
+        y: {
+          beginAtZero: true,
+          ticks: { color: "#f1f1f1" },
+          title: { display: true, text: "Liters", color: "#ccc" }
+        },
+        x: {
+          ticks: { color: "#f1f1f1" },
+          title: { display: true, text: "Month", color: "#ccc" }
+        }
       },
       plugins: {
-        legend: { labels:{ color:"#e2e8f0" } },
+        legend: { labels: { color: "#fff" } },
         title: {
-          display:true,
-          text:`Water Usage for ${currentUser} (${new Date().getFullYear()})`,
-          color:"#93c5fd",
-          font:{ size:18, weight:"bold" }
+          display: true,
+          text: `Water Usage for ${currentUser} (${new Date().getFullYear()})`,
+          color: "#ffcc70",
+          font: { size: 16, weight: "bold" }
         }
       }
     }
@@ -176,10 +209,7 @@ function renderChart(labels, data) {
 }
 
 // Load monthly data
-const months = [
-  "January","February","March","April","May","June",
-  "July","August","September","October","November","December"
-];
+const months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
 const year = new Date().getFullYear();
 
 const monthlyRef = db.ref(`monthly_usage/${currentUser}`);
