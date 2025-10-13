@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Water Usage Analytics & Tips</title>
+
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+
+<!-- Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(135deg,#0f172a,#1e293b);
+  color: #e2e8f0;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  padding:2rem;
+  min-height:100vh;
+}
+
+h1 {
+  color:#60a5fa;
+  margin-bottom:1.5rem;
+}
+
+canvas {
+  background: rgba(30,41,59,0.85);
+  border-radius:1rem;
+  box-shadow:0 6px 18px rgba(0,0,0,0.5);
+  padding:1rem;
+  max-width:800px;
+  width:100%;
+  margin-bottom:2rem;
+}
+
+.back-btn {
+  padding:0.6rem 1.2rem;
+  background:#3b82f6;
+  border:none;
+  border-radius:8px;
+  color:white;
+  font-weight:600;
+  cursor:pointer;
+  transition:0.3s;
+  margin-bottom:2rem;
+}
+.back-btn:hover { background:#2563eb; }
+
+/* ===== Tips Section ===== */
+.tips-container-wrapper {
+  max-width:800px;
+  width:100%;
+  background: rgba(15,23,42,0.85);
+  padding:1.5rem 2rem;
+  border-radius:12px;
+  box-shadow:0 10px 30px rgba(0,0,0,0.6);
+  text-align:center;
+  margin-bottom:2rem;
+}
+
+.button-tips {
+  background: linear-gradient(90deg,#60a5fa,#34d399);
+  color:#0f172a;
+  font-weight:bold;
+  padding:0.7rem 1.5rem;
+  border:none;
+  border-radius:50px;
+  cursor:pointer;
+  font-size:1rem;
+  transition: all 0.3s ease;
+  margin-bottom:1rem;
+}
+
+.button-tips:hover {
+  transform: scale(1.05);
+  box-shadow: 0 5px 15px rgba(0,255,200,0.4);
+}
+
+.tips-container {
+  display:none;
+  margin-top:1rem;
+  text-align:left;
+}
+
+.tip {
+  background: rgba(52,211,153,0.1);
+  margin:0.5rem 0;
+  padding:0.8rem 1rem;
+  border-left:4px solid #34d399;
+  border-radius:8px;
+  transition: transform 0.3s ease;
+}
+
+.tip:hover {
+  transform: translateX(5px);
+  background: rgba(52,211,153,0.2);
+}
+</style>
+</head>
+<body>
+
+<h1>Water Usage Analytics</h1>
+
+<canvas id="usageChart"></canvas>
+
+<button class="back-btn" onclick="window.location.href='residence_dashboard.html'">← Back to Dashboard</button>
+
+<!-- Water Saving Tips Section -->
+<div class="tips-container-wrapper">
+  <button class="button-tips" id="showTipsBtn">Show Tips to Save Water</button>
+  <div class="tips-container" id="tipsContainer">
+    <div class="tip">🚿 Take shorter showers – aim for under 5 minutes.</div>
+    <div class="tip">💧 Turn off the tap while brushing your teeth or washing dishes.</div>
+    <div class="tip">♻️ Reuse water from washing vegetables to water plants.</div>
+    <div class="tip">🚰 Fix leaks immediately – even small drips waste gallons.</div>
+    <div class="tip">🌱 Water plants early in the morning or late evening to reduce evaporation.</div>
+    <div class="tip">🧺 Run washing machines and dishwashers only with full loads.</div>
+    <div class="tip">💡 Install water-saving fixtures like low-flow faucets and showerheads.</div>
+  </div>
+</div>
+
+<script>
+// Firebase config
+const firebaseConfig = {
+  apiKey: "AIzaSyDXNrUVM1VBaXOg2ZmkIFE9BKxexxBmpIs",
+  authDomain: "waterbase-b1393.firebaseapp.com",
+  databaseURL: "https://waterbase-b1393-default-rtdb.asia-southeast1.firebasedatabase.app/",
+};
+firebase.initializeApp(firebaseConfig);
+const db = firebase.database();
+
+// Current user
+const currentUser = localStorage.getItem("username") || "Residence";
+
+// Chart setup
+const ctx = document.getElementById("usageChart").getContext("2d");
+let chartInstance = null;
+
+function renderChart(labels, data) {
+  if (chartInstance) chartInstance.destroy();
+  chartInstance = new Chart(ctx, {
+    type: "bar",
+    data: {
+      labels: labels,
+      datasets: [{
+        label: "Monthly Water Consumption (Liters)",
+        data: data,
+        backgroundColor: "rgba(59,130,246,0.6)",
+        borderColor: "#3b82f6",
+        borderWidth: 1,
+      }]
+    },
+    options: {
+      responsive: true,
+      scales: {
+        y: { beginAtZero: true, title:{ display:true, text:"Liters" } },
+        x: { title:{ display:true, text:"Month" } }
+      },
+      plugins: {
+        legend: { labels:{ color:"#e2e8f0" } },
+        title: {
+          display:true,
+          text:`Water Usage for ${currentUser} (${new Date().getFullYear()})`,
+          color:"#93c5fd",
+          font:{ size:18, weight:"bold" }
+        }
+      }
+    }
+  });
+}
+
+// Load monthly data
+const months = [
+  "January","February","March","April","May","June",
+  "July","August","September","October","November","December"
+];
+const year = new Date().getFullYear();
+
+const monthlyRef = db.ref(`monthly_usage/${currentUser}`);
+monthlyRef.on("value", snap => {
+  const data = snap.val() || {};
+  const monthlyData = months.map(month => {
+    const entry = Object.values(data).find(d => d.month===month && d.year===year);
+    return entry ? entry.consumption_liters : 0;
+  });
+  renderChart(months, monthlyData);
+});
+
+// Toggle Tips
+const btn = document.getElementById('showTipsBtn');
+const tips = document.getElementById('tipsContainer');
+
+btn.addEventListener('click', () => {
+  if (tips.style.display === 'none' || tips.style.display === '') {
+    tips.style.display = 'block';
+    btn.innerText = "Hide Tips";
+  } else {
+    tips.style.display = 'none';
+    btn.innerText = "Show Tips to Save Water";
+  }
+});
+</script>
+
+</body>
+</html>
