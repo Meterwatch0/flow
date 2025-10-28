@@ -1,0 +1,897 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Our Services - IoT Water Management</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --primary: #1a73e8;
+      --secondary: #34a853;
+      --accent: #4285f4;
+      --dark: #121212;
+      --light: #f5f5f5;
+      --card-bg: rgba(30, 30, 30, 0.8);
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      background-size: 400% 400%;
+      animation: gradientBG 15s ease infinite;
+      color: #fff;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* Floating Elements */
+    .floating-elements {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+    }
+    
+    .floating-element {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.05);
+      animation: float 20s infinite linear;
+    }
+    
+    @keyframes float {
+      0% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-20px) rotate(180deg); }
+      100% { transform: translateY(0) rotate(360deg); }
+    }
+
+    /* Navbar */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 40px;
+      background: rgba(20, 20, 20, 0.8);
+      backdrop-filter: blur(10px);
+      color: #fff;
+      z-index: 100;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+      transition: all 0.3s ease;
+    }
+    
+    .navbar.scrolled {
+      padding: 10px 40px;
+      background: rgba(20, 20, 20, 0.9);
+    }
+    
+    .navbar .logo {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .navbar .logo i {
+      color: var(--primary);
+    }
+    
+    .navbar ul {
+      list-style: none;
+      display: flex;
+      gap: 25px;
+      margin: 0;
+      padding: 0;
+    }
+    
+    .navbar ul li {
+      display: inline;
+      position: relative;
+    }
+    
+    .navbar ul li a {
+      text-decoration: none;
+      color: #fff;
+      font-size: 0.95rem;
+      transition: 0.3s;
+      padding: 5px 0;
+    }
+    
+    .navbar ul li a:hover {
+      color: var(--primary);
+    }
+    
+    .navbar ul li a::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--primary);
+      transition: width 0.3s ease;
+    }
+    
+    .navbar ul li a:hover::after {
+      width: 100%;
+    }
+    
+    .navbar .login-btn {
+      padding: 8px 20px;
+      border: 1px solid var(--primary);
+      border-radius: 8px;
+      text-decoration: none;
+      color: #fff;
+      transition: 0.3s;
+      background: transparent;
+    }
+    
+    .navbar .login-btn:hover {
+      background: var(--primary);
+      box-shadow: 0 0 15px rgba(26, 115, 232, 0.5);
+      transform: translateY(-2px);
+    }
+    
+    .hamburger {
+      display: none;
+      font-size: 1.8rem;
+      cursor: pointer;
+      color: var(--primary);
+    }
+
+    /* Hero Section */
+    .hero {
+      padding: 150px 20px 80px;
+      text-align: center;
+      position: relative;
+      z-index: 1;
+    }
+    
+    .hero h1 {
+      font-size: 3.5rem;
+      margin-bottom: 20px;
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    
+    .hero p {
+      font-size: 1.2rem;
+      max-width: 800px;
+      margin: 0 auto 40px;
+      color: #ddd;
+    }
+
+    /* Services Section */
+    .services {
+      padding: 80px 20px;
+      position: relative;
+      z-index: 1;
+    }
+    
+    .section-title {
+      text-align: center;
+      margin-bottom: 60px;
+      position: relative;
+    }
+    
+    .section-title h2 {
+      font-size: 2.5rem;
+      margin-bottom: 15px;
+      color: #fff;
+    }
+    
+    .section-title p {
+      font-size: 1.1rem;
+      color: #ccc;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+    
+    .section-title::after {
+      content: '';
+      display: block;
+      width: 80px;
+      height: 4px;
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      margin: 20px auto;
+      border-radius: 2px;
+    }
+    
+    .services-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 30px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    .service-card {
+      background: var(--card-bg);
+      backdrop-filter: blur(10px);
+      border-radius: 15px;
+      padding: 30px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .service-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+    }
+    
+    .service-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+    }
+    
+    .service-icon {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+      font-size: 1.8rem;
+      color: white;
+    }
+    
+    .service-card h3 {
+      font-size: 1.5rem;
+      margin-bottom: 15px;
+      color: #fff;
+    }
+    
+    .service-card p {
+      color: #ccc;
+      margin-bottom: 20px;
+      line-height: 1.6;
+    }
+    
+    .service-features {
+      list-style: none;
+      margin-bottom: 25px;
+    }
+    
+    .service-features li {
+      padding: 8px 0;
+      color: #ddd;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .service-features li i {
+      color: var(--secondary);
+      font-size: 0.9rem;
+    }
+    
+    .service-btn {
+      display: inline-block;
+      padding: 10px 20px;
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      border: none;
+      cursor: pointer;
+    }
+    
+    .service-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(26, 115, 232, 0.4);
+    }
+
+    /* How It Works Section */
+    .how-it-works {
+      padding: 80px 20px;
+      background: rgba(20, 20, 20, 0.5);
+      position: relative;
+      z-index: 1;
+    }
+    
+    .steps-container {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 30px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    .step {
+      flex: 1;
+      min-width: 250px;
+      max-width: 300px;
+      text-align: center;
+      padding: 30px 20px;
+      background: var(--card-bg);
+      backdrop-filter: blur(10px);
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transition: all 0.3s ease;
+    }
+    
+    .step:hover {
+      transform: translateY(-5px);
+    }
+    
+    .step-number {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+      font-weight: bold;
+      font-size: 1.2rem;
+    }
+    
+    .step h3 {
+      margin-bottom: 15px;
+      color: #fff;
+    }
+    
+    .step p {
+      color: #ccc;
+      line-height: 1.6;
+    }
+
+    /* CTA Section */
+    .cta {
+      padding: 100px 20px;
+      text-align: center;
+      position: relative;
+      z-index: 1;
+    }
+    
+    .cta-content {
+      max-width: 800px;
+      margin: 0 auto;
+      background: var(--card-bg);
+      backdrop-filter: blur(10px);
+      padding: 50px;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .cta h2 {
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+      color: #fff;
+    }
+    
+    .cta p {
+      font-size: 1.1rem;
+      margin-bottom: 30px;
+      color: #ccc;
+    }
+    
+    .cta-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    
+    .btn {
+      padding: 12px 30px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .btn-primary {
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      color: white;
+    }
+    
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(26, 115, 232, 0.4);
+    }
+    
+    .btn-secondary {
+      background: transparent;
+      color: white;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+    
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.1);
+      transform: translateY(-3px);
+    }
+
+    /* Footer */
+    footer {
+      background: rgba(10, 10, 10, 0.9);
+      padding: 60px 20px 30px;
+      position: relative;
+      z-index: 1;
+    }
+    
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 40px;
+      margin-bottom: 40px;
+    }
+    
+    .footer-column h3 {
+      font-size: 1.3rem;
+      margin-bottom: 20px;
+      color: #fff;
+      position: relative;
+      padding-bottom: 10px;
+    }
+    
+    .footer-column h3::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 40px;
+      height: 3px;
+      background: var(--primary);
+    }
+    
+    .footer-column p {
+      color: #ccc;
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+    
+    .footer-links {
+      list-style: none;
+    }
+    
+    .footer-links li {
+      margin-bottom: 10px;
+    }
+    
+    .footer-links a {
+      color: #ccc;
+      text-decoration: none;
+      transition: 0.3s;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .footer-links a:hover {
+      color: var(--primary);
+      transform: translateX(5px);
+    }
+    
+    .social-links {
+      display: flex;
+      gap: 15px;
+      margin-top: 20px;
+    }
+    
+    .social-link {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+    
+    .social-link:hover {
+      background: var(--primary);
+      transform: translateY(-3px);
+    }
+    
+    .copyright {
+      text-align: center;
+      padding-top: 30px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      color: #888;
+      font-size: 0.9rem;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .navbar {
+        flex-direction: row;
+        align-items: center;
+        padding: 12px 20px;
+      }
+      
+      .navbar .hamburger { 
+        display: block; 
+      }
+      
+      .navbar ul {
+        flex-direction: column;
+        gap: 0;
+        width: 100%;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        background: rgba(20, 20, 20, 0.95);
+        backdrop-filter: blur(10px);
+        display: none;
+        padding: 15px 0;
+        box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+      }
+      
+      .navbar ul.show { 
+        display: flex; 
+      }
+      
+      .navbar ul li { 
+        width: 100%; 
+        text-align: center;
+      }
+      
+      .navbar ul li a { 
+        display: block; 
+        padding: 12px; 
+        width: 100%; 
+      }
+      
+      .hero h1 {
+        font-size: 2.5rem;
+      }
+      
+      .services-container {
+        grid-template-columns: 1fr;
+      }
+      
+      .cta-content {
+        padding: 30px 20px;
+      }
+      
+      .cta h2 {
+        font-size: 2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Floating Background Elements -->
+  <div class="floating-elements" id="floatingElements"></div>
+
+  <!-- Navbar -->
+  <nav class="navbar" id="navbar">
+    <div class="logo">
+      <i class="fas fa-water"></i>
+      <span>Lgcts</span>
+    </div>
+    <div class="hamburger" onclick="toggleMenu()">☰</div>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="aboutus.html">About</a></li>
+      <li><a href="service.html" class="active">Services</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <a href="index.html" class="login-btn">Login</a>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="container">
+      <h1>Our IoT Water Management Services</h1>
+      <p>Revolutionizing water consumption monitoring with cutting-edge IoT technology for households and businesses</p>
+    </div>
+  </section>
+
+  <!-- Services Section -->
+  <section class="services">
+    <div class="container">
+      <div class="section-title">
+        <h2>Our Services</h2>
+        <p>Comprehensive IoT solutions for efficient water management and conservation</p>
+      </div>
+      
+      <div class="services-container">
+        <!-- Service 1 -->
+        <div class="service-card">
+          <div class="service-icon">
+            <i class="fas fa-tint"></i>
+          </div>
+          <h3>Real-Time Water Monitoring</h3>
+          <p>Track your water consumption in real-time with our advanced IoT sensors and intuitive dashboard.</p>
+          <ul class="service-features">
+            <li><i class="fas fa-check"></i> Live consumption data</li>
+            <li><i class="fas fa-check"></i> Usage pattern analysis</li>
+            <li><i class="fas fa-check"></i> Leak detection alerts</li>
+            <li><i class="fas fa-check"></i> Historical data tracking</li>
+          </ul>
+          <button class="service-btn">Learn More</button>
+        </div>
+        
+        <!-- Service 2 -->
+        <div class="service-card">
+          <div class="service-icon">
+            <i class="fas fa-chart-line"></i>
+          </div>
+          <h3>Smart Analytics & Reporting</h3>
+          <p>Gain valuable insights into your water usage with our AI-powered analytics and detailed reports.</p>
+          <ul class="service-features">
+            <li><i class="fas fa-check"></i> Predictive consumption analysis</li>
+            <li><i class="fas fa-check"></i> Customizable reports</li>
+            <li><i class="fas fa-check"></i> Conservation recommendations</li>
+            <li><i class="fas fa-check"></i> Cost-saving insights</li>
+          </ul>
+          <button class="service-btn">Learn More</button>
+        </div>
+        
+        <!-- Service 3 -->
+        <div class="service-card">
+          <div class="service-icon">
+            <i class="fas fa-mobile-alt"></i>
+          </div>
+          <h3>Mobile App Integration</h3>
+          <p>Monitor and control your water system from anywhere with our user-friendly mobile application.</p>
+          <ul class="service-features">
+            <li><i class="fas fa-check"></i> Real-time notifications</li>
+            <li><i class="fas fa-check"></i> Remote system control</li>
+            <li><i class="fas fa-check"></i> Multi-user access</li>
+            <li><i class="fas fa-check"></i> Cross-platform compatibility</li>
+          </ul>
+          <button class="service-btn">Learn More</button>
+        </div>
+        
+        <!-- Service 4 -->
+        <div class="service-card">
+          <div class="service-icon">
+            <i class="fas fa-cogs"></i>
+          </div>
+          <h3>Automated Water Control</h3>
+          <p>Automate your water system with smart valves and controllers for optimal efficiency.</p>
+          <ul class="service-features">
+            <li><i class="fas fa-check"></i> Smart valve integration</li>
+            <li><i class="fas fa-check"></i> Scheduled water usage</li>
+            <li><i class="fas fa-check"></i> Emergency shut-off</li>
+            <li><i class="fas fa-check"></i> Irrigation optimization</li>
+          </ul>
+          <button class="service-btn">Learn More</button>
+        </div>
+        
+        <!-- Service 5 -->
+        <div class="service-card">
+          <div class="service-icon">
+            <i class="fas fa-shield-alt"></i>
+          </div>
+          <h3>Security & Maintenance</h3>
+          <p>Ensure the security and longevity of your water system with our comprehensive maintenance services.</p>
+          <ul class="service-features">
+            <li><i class="fas fa-check"></i> System health monitoring</li>
+            <li><i class="fas fa-check"></i> Predictive maintenance</li>
+            <li><i class="fas fa-check"></i> Data encryption</li>
+            <li><i class="fas fa-check"></i> 24/7 technical support</li>
+          </ul>
+          <button class="service-btn">Learn More</button>
+        </div>
+        
+        <!-- Service 6 -->
+        <div class="service-card">
+          <div class="service-icon">
+            <i class="fas fa-cloud"></i>
+          </div>
+          <h3>Cloud Data Management</h3>
+          <p>Securely store and access your water data from anywhere with our cloud-based platform.</p>
+          <ul class="service-features">
+            <li><i class="fas fa-check"></i> Unlimited data storage</li>
+            <li><i class="fas fa-check"></i> Multi-device synchronization</li>
+            <li><i class="fas fa-check"></i> Automated backups</li>
+            <li><i class="fas fa-check"></i> API integration</li>
+          </ul>
+          <button class="service-btn">Learn More</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How It Works Section -->
+  <section class="how-it-works">
+    <div class="container">
+      <div class="section-title">
+        <h2>How It Works</h2>
+        <p>Simple steps to transform your water management system</p>
+      </div>
+      
+      <div class="steps-container">
+        <div class="step">
+          <div class="step-number">1</div>
+          <h3>Install Sensors</h3>
+          <p>Our technicians install IoT sensors on your main water line and key consumption points.</p>
+        </div>
+        
+        <div class="step">
+          <div class="step-number">2</div>
+          <h3>Connect to Network</h3>
+          <p>Sensors connect to your home Wi-Fi and transmit data to our secure cloud platform.</p>
+        </div>
+        
+        <div class="step">
+          <div class="step-number">3</div>
+          <h3>Access Dashboard</h3>
+          <p>Monitor real-time consumption, set alerts, and analyze patterns through our dashboard.</p>
+        </div>
+        
+        <div class="step">
+          <div class="step-number">4</div>
+          <h3>Optimize Usage</h3>
+          <p>Use insights to reduce waste, detect leaks early, and save on water bills.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="cta">
+    <div class="cta-content">
+      <h2>Ready to Transform Your Water Management?</h2>
+      <p>Join hundreds of households and businesses already benefiting from our IoT water management solutions.</p>
+      <div class="cta-buttons">
+        <a href="contact.html" class="btn btn-primary">
+          <i class="fas fa-calendar-alt"></i>
+          Schedule a Demo
+        </a>
+        <a href="contact.html" class="btn btn-secondary">
+          <i class="fas fa-phone-alt"></i>
+          Contact Sales
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-content">
+      <div class="footer-column">
+        <h3>About Lgcts</h3>
+        <p>We provide innovative IoT solutions for efficient water management, helping households and businesses conserve water and reduce costs.</p>
+        <div class="social-links">
+          <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+          <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+          <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+        </div>
+      </div>
+      
+      <div class="footer-column">
+        <h3>Quick Links</h3>
+        <ul class="footer-links">
+          <li><a href="index.html"><i class="fas fa-chevron-right"></i> Home</a></li>
+          <li><a href="aboutus.html"><i class="fas fa-chevron-right"></i> About Us</a></li>
+          <li><a href="service.html"><i class="fas fa-chevron-right"></i> Services</a></li>
+          <li><a href="contact.html"><i class="fas fa-chevron-right"></i> Contact</a></li>
+          <li><a href="login.html"><i class="fas fa-chevron-right"></i> Login</a></li>
+        </ul>
+      </div>
+      
+      <div class="footer-column">
+        <h3>Our Services</h3>
+        <ul class="footer-links">
+          <li><a href="#"><i class="fas fa-chevron-right"></i> Real-Time Monitoring</a></li>
+          <li><a href="#"><i class="fas fa-chevron-right"></i> Smart Analytics</a></li>
+          <li><a href="#"><i class="fas fa-chevron-right"></i> Mobile App</a></li>
+          <li><a href="#"><i class="fas fa-chevron-right"></i> Automated Control</a></li>
+          <li><a href="#"><i class="fas fa-chevron-right"></i> Cloud Management</a></li>
+        </ul>
+      </div>
+      
+      <div class="footer-column">
+        <h3>Contact Info</h3>
+        <ul class="footer-links">
+          <li><a href="#"><i class="fas fa-map-marker-alt"></i> Magalang Pampanga</a></li>
+          <li><a href="tel:+1234567890"><i class="fas fa-phone"></i> 09661672593</a></li>
+          <li><a href="mailto:info@lgcts.com"><i class="fas fa-envelope"></i> waterbase0@gmail.com.com</a></li>
+          <li><a href="#"><i class="fas fa-clock"></i> Mon-Fri: 9AM - 6PM</a></li>
+        </ul>
+      </div>
+    </div>
+    
+    <div class="copyright">
+      <p>&copy; 2023 Lgcts. All rights reserved. | IoT Water Management System</p>
+    </div>
+  </footer>
+
+  <script>
+    // Create floating background elements
+    const floatingElements = document.getElementById('floatingElements');
+    for (let i = 0; i < 15; i++) {
+      const element = document.createElement('div');
+      element.classList.add('floating-element');
+      const size = Math.random() * 60 + 20;
+      element.style.width = `${size}px`;
+      element.style.height = `${size}px`;
+      element.style.top = `${Math.random() * 100}%`;
+      element.style.left = `${Math.random() * 100}%`;
+      element.style.animationDelay = `${Math.random() * 15}s`;
+      element.style.animationDuration = `${Math.random() * 10 + 10}s`;
+      floatingElements.appendChild(element);
+    }
+
+    // Navbar scroll effect
+    window.addEventListener('scroll', () => {
+      const navbar = document.getElementById('navbar');
+      if (window.scrollY > 50) {
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.remove('scrolled');
+      }
+    });
+
+    // Toggle mobile navbar
+    function toggleMenu() {
+      document.querySelector('.navbar ul').classList.toggle('show');
+    }
+
+    // Service card animations
+    document.querySelectorAll('.service-card').forEach(card => {
+      card.addEventListener('mouseenter', () => {
+        card.style.transform = 'translateY(-10px)';
+      });
+      
+      card.addEventListener('mouseleave', () => {
+        card.style.transform = 'translateY(0)';
+      });
+    });
+
+    // Button animations
+    document.querySelectorAll('.service-btn, .btn').forEach(button => {
+      button.addEventListener('mouseenter', () => {
+        button.style.transform = 'translateY(-3px)';
+      });
+      
+      button.addEventListener('mouseleave', () => {
+        button.style.transform = 'translateY(0)';
+      });
+    });
+  </script>
+</body>
+
+</html>
