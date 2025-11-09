@@ -1,0 +1,943 @@
+{
+  "billing": {
+    "23234": {
+      "billingConsumption": 0,
+      "currentBill": 195,
+      "lastResetConsumption": 0,
+      "lastUpdated": 1762433519523,
+      "username": "tito"
+    },
+    "-00007": {
+      "billingConsumption": 0,
+      "currentBill": 195,
+      "lastReset": 1762433522285,
+      "lastResetConsumption": 31,
+      "lastUpdated": 1762433523872,
+      "resetBy": "Employee",
+      "username": "cerilo2"
+    },
+    "-00006": {
+      "billingConsumption": 0,
+      "currentBill": 195,
+      "lastResetConsumption": 0,
+      "lastUpdated": 1762666909687,
+      "username": "Gaddi Crisanto"
+    },
+    "-00005": {
+      "billingConsumption": 0,
+      "currentBill": 195,
+      "lastReset": 1761833815948,
+      "lastResetConsumption": 100,
+      "lastUpdated": 1762433519528,
+      "resetBy": "Employee",
+      "username": "tristan"
+    },
+    "-00003": {
+      "billingConsumption": 0,
+      "currentBill": 195,
+      "lastReset": 1761834874232,
+      "lastResetConsumption": 88,
+      "lastUpdated": 1762666909691,
+      "resetBy": "Employee",
+      "username": "cerilo"
+    },
+    "-00002": {
+      "billingConsumption": 1,
+      "currentBill": 195,
+      "lastResetConsumption": 0,
+      "lastUpdated": 1762666909694,
+      "username": "liam"
+    },
+    "-00001": {
+      "billingConsumption": 0,
+      "currentBill": 195,
+      "lastResetConsumption": 0,
+      "lastUpdated": 1762433519532,
+      "username": "joshua"
+    },
+    "00007": {
+      "billingConsumption": 0,
+      "currentBill": 195,
+      "lastReset": 1762325575395,
+      "lastResetConsumption": 0,
+      "lastUpdated": 1762433519533,
+      "resetBy": "Employee",
+      "username": "Jiso"
+    }
+  },
+  "chats": {
+    "-ObT4n3uV1BB0z6XS04W": {
+      "sender": "tristan",
+      "text": "hw",
+      "timestamp": 1760367685970
+    },
+    "liam_Employee": {
+      "-OdbbwVAx6drcR2DMX_I": {
+        "sender": "liam",
+        "text": "hi",
+        "timestamp": 1762675116060
+      }
+    }
+  },
+  "contactMessages": {
+    "-O_X7rRz5euxSpqCaQhc": {
+      "email": "nsnsndns@gmail.com",
+      "message": "Bznsmsmsms",
+      "name": "Nsksmsms",
+      "subject": "Ndndns",
+      "timestamp": 1758288115518
+    },
+    "-O__ZyrFlvaF7dZViiCb": {
+      "email": "gabrielliam123@gmail.com",
+      "message": "Nsnsms",
+      "name": "Nzmsms",
+      "subject": "Bsbsns",
+      "timestamp": 1758345817548
+    },
+    "-O__Zz_2u2U6hakO27JW": {
+      "email": "gabrielliam123@gmail.com",
+      "message": "Nsnsms",
+      "name": "Nzmsms",
+      "subject": "Bsbsns",
+      "timestamp": 1758345820483
+    },
+    "-O___-NDxdcAUAvGJe6B": {
+      "email": "gabrielliam123@gmail.com",
+      "message": "Nsnsms",
+      "name": "Nzmsms",
+      "subject": "Bsbsns",
+      "timestamp": 1758345823758
+    },
+    "-Oa9wZt-JMooSbUsIdWU": {
+      "email": "gabrielliam805@gmail.com",
+      "message": "Nsnsnsjs",
+      "name": "Iwiwj",
+      "subject": "Nsnsns",
+      "timestamp": 1758972759612
+    },
+    "-OajY_5aLiXCqA9oa7u5": {
+      "email": "gabrielliam805@gmail.com",
+      "message": "Bznsjsiwjs sbs",
+      "name": "Nsnj",
+      "subject": "  Bbbjamsmsma",
+      "timestamp": 1759586963875
+    },
+    "-Oc62jyRg-kIZtW20CRQ": {
+      "email": "asdasd@laksdlkasd",
+      "message": "asdasdasd",
+      "name": "asdasdasd",
+      "subject": "asdasd",
+      "timestamp": 1761055014808
+    },
+    "-Ocd_9IgsVjNjrHpGfP1": {
+      "email": "xcvxcv@sdgsdf",
+      "message": "zxcvxcvxc",
+      "name": "xdfsgvxcv",
+      "subject": "xcvxcvxcv",
+      "timestamp": 1761634198763
+    }
+  },
+  "monthly_usage": {
+    "Gaddi Crisanto": {
+      "2025_November": {
+        "consumption_liters": 0,
+        "consumption_m3": 0,
+        "month": "November",
+        "updatedAt": 1762490700663,
+        "year": 2025
+      }
+    },
+    "Kenrick Abagon": {
+      "2025_November": {
+        "consumption_liters": 0,
+        "consumption_m3": 0,
+        "month": "November",
+        "updatedAt": 1762675560932,
+        "year": 2025
+      }
+    },
+    "cerilo": {
+      "2025_November": {
+        "consumption_liters": 88000,
+        "consumption_m3": 88,
+        "month": "November",
+        "updatedAt": 1762099999539,
+        "year": 2025
+      },
+      "2025_October": {
+        "consumption_liters": 88000,
+        "consumption_m3": 88,
+        "month": "October",
+        "updatedAt": 1761835860344,
+        "year": 2025
+      }
+    },
+    "liam": {
+      "2025_November": {
+        "consumption_liters": 1000,
+        "consumption_m3": 1,
+        "month": "November",
+        "updatedAt": 1762675108608,
+        "year": 2025
+      },
+      "2025_October": {
+        "consumption_liters": 1000,
+        "consumption_m3": 1,
+        "month": "October",
+        "updatedAt": 1761903406327,
+        "year": 2025
+      }
+    }
+  },
+  "notifications": {
+    "-OaIyzcn6KesWC8EoH0z": "New message from liam: sdf",
+    "-OaIyzco5GV5mGdIwCaD": "New message from liam: sd",
+    "-OaIyzcpoRCZK9qbkS1k": "New message from liam: fsdf",
+    "-OaIyzcpoRCZK9qbkS1l": "New message from liam: sdf",
+    "-OaIyzcqYbIZjNt3RnT1": "New message from liam: sdf",
+    "-OaIyzcrAPJBKU_iTa1R": "New message from liam: sdf",
+    "-OaIyzcsyAPHOuRRWEvY": "New message from liam: sdf",
+    "-OaIyzcsyAPHOuRRWEvZ": "New message from liam: sdf",
+    "-OaIyzctp3aWGtlVQazY": "New message from liam: sdf",
+    "-OaIyzcuZZlgxFMj6MR8": "New message from liam: sdf",
+    "-OaIz0Ds6lDj5vzVraJu": "New message from 32: asd",
+    "employee_123": {
+      "-Octc3oS4FYr5wPKoHgI": {
+        "message": "New message from liam: ggggg",
+        "timestamp": 1761903398207,
+        "viewed": false
+      }
+    }
+  },
+  "residential_water_rates": {
+    "r0_5": 195,
+    "r10": 344,
+    "r11_20": 36,
+    "r21_30": 40,
+    "r31_40": 44,
+    "r41_50": 48,
+    "r51_up": 52,
+    "r6": 224,
+    "r7": 254,
+    "r8": 284,
+    "r9": 314
+  },
+  "sensor": {
+    "-Oa3r4s0PR62XQ02Fs-c": {
+      "control_switch": {
+        "value": true
+      },
+      "water_alerts": {
+        "alert_1758870658619": {
+          "message": "Welcome!We're so glad to have you here. If you have any questions or need help getting started, just let us know. Enjoy your experience",
+          "pulses": 14,
+          "timestamp": 1758870658619
+        }
+      },
+      "water_timer_counter": {
+        "logs": {
+          "exampleLog1": {
+            "pulses": 5,
+            "timestamp": 1758870658619
+          },
+          "exampleLog2": {
+            "pulses": 8,
+            "timestamp": 1758870668619
+          }
+        },
+        "value": 0
+      }
+    }
+  },
+  "sensor2": {
+    "-00002": {
+      "control_switch": {
+        "value": true
+      },
+      "water_timer_counter": {
+        "logs": {
+          "-OdXMw5rf3LMgVPZowdX": {
+            "liters": 72.66292,
+            "pulses": 6,
+            "timestamp": 1762587034039
+          },
+          "-OdXN1wSaNeR_enQ0gD5": {
+            "liters": 72.81181,
+            "pulses": 67,
+            "timestamp": 1762587062046
+          },
+          "-OdXN2AxkMTAu3ByHtJ3": {
+            "liters": 72.81625,
+            "pulses": 2,
+            "timestamp": 1762587063037
+          },
+          "-OdXN3de8Es7LcsCrzSq": {
+            "liters": 72.85181,
+            "pulses": 16,
+            "timestamp": 1762587069034
+          },
+          "-OdXN3tEVXrv80xOlZdN": {
+            "liters": 73.62959,
+            "pulses": 350,
+            "timestamp": 1762587070031
+          },
+          "-OdXN5MG3JQVPsO3XMLS": {
+            "liters": 73.96736,
+            "pulses": 152,
+            "timestamp": 1762587076049
+          },
+          "-OdXN5anEGmV4VBLgmeJ": {
+            "liters": 74.05625,
+            "pulses": 40,
+            "timestamp": 1762587077043
+          },
+          "-OdXN5qBk6nRUsAgFrCh": {
+            "liters": 74.13403,
+            "pulses": 35,
+            "timestamp": 1762587078028
+          },
+          "-OdXN64rRpdBA2wjRC7B": {
+            "liters": 74.23847,
+            "pulses": 47,
+            "timestamp": 1762587079031
+          },
+          "-OdXN6KX8EHniacFLHpx": {
+            "liters": 74.51847,
+            "pulses": 126,
+            "timestamp": 1762587080035
+          },
+          "-OdXN6_CUd5ClK8u3jBf": {
+            "liters": 74.52736,
+            "pulses": 4,
+            "timestamp": 1762587081038
+          },
+          "-OdXN8oBrUlYbbWyeOex": {
+            "liters": 74.61403,
+            "pulses": 39,
+            "timestamp": 1762587090188
+          },
+          "-OdXN90aSGH8otkMhCBt": {
+            "liters": 74.64069,
+            "pulses": 12,
+            "timestamp": 1762587091047
+          },
+          "-OdXNJkwOsV0onLfZi8E": {
+            "liters": 74.66736,
+            "pulses": 12,
+            "timestamp": 1762587135036
+          },
+          "-OdXNK-XblNE07SKxRV1": {
+            "liters": 74.78958,
+            "pulses": 55,
+            "timestamp": 1762587136034
+          },
+          "-OdXNKFQydatnbXNQaSF": {
+            "liters": 74.91624,
+            "pulses": 57,
+            "timestamp": 1762587137051
+          },
+          "-OdXNKV0OJTf_obiEINo": {
+            "liters": 75.99402,
+            "pulses": 485,
+            "timestamp": 1762587138049
+          },
+          "-OdXNKjNO1DMJnFoin6m": {
+            "liters": 76.08291,
+            "pulses": 40,
+            "timestamp": 1762587139032
+          },
+          "-OdXNS37p_L6Vd8ExdBs": {
+            "liters": 76.08513,
+            "pulses": 1,
+            "timestamp": 1762587169032
+          },
+          "-OdXNSJ7YEttEi2u5Sf1": {
+            "liters": 76.23846,
+            "pulses": 69,
+            "timestamp": 1762587170056
+          },
+          "-OdXNSYLWZDuwEHTq50X": {
+            "liters": 76.2518,
+            "pulses": 6,
+            "timestamp": 1762587171030
+          },
+          "-OdXNViVEF45hAigAa2d": {
+            "liters": 76.46958,
+            "pulses": 98,
+            "timestamp": 1762587184032
+          },
+          "-OdXNW7mSUpepzCOR93-": {
+            "liters": 78.02069,
+            "pulses": 698,
+            "timestamp": 1762587185714
+          },
+          "-OdXNXBKj5EhFoy9dk0J": {
+            "liters": 78.02514,
+            "pulses": 2,
+            "timestamp": 1762587190037
+          },
+          "-OdXNXQyEIsxQXOab0hX": {
+            "liters": 78.02959,
+            "pulses": 2,
+            "timestamp": 1762587191038
+          },
+          "-OdXNZcR5SSkrXyK00gk": {
+            "liters": 78.03403,
+            "pulses": 2,
+            "timestamp": 1762587200028
+          },
+          "-OdXNZs5v6Vi3nqc6eSl": {
+            "liters": 86.46515,
+            "pulses": 3794,
+            "timestamp": 1762587201031
+          },
+          "-OdXN_6ka8_gh1eWjux1": {
+            "liters": 93.79626,
+            "pulses": 3299,
+            "timestamp": 1762587202032
+          },
+          "-OdXN_MLmtc83amtVuGR": {
+            "liters": 93.88959,
+            "pulses": 42,
+            "timestamp": 1762587203030
+          },
+          "-OdXNa5NSvGVilbxUlO4": {
+            "liters": 93.90292,
+            "pulses": 6,
+            "timestamp": 1762587206040
+          },
+          "-OdXNaLsp4jUaHEXKYfU": {
+            "liters": 94.06293,
+            "pulses": 72,
+            "timestamp": 1762587207097
+          },
+          "-OdXNaaawK8LiGaUKWxV": {
+            "liters": 94.07182,
+            "pulses": 4,
+            "timestamp": 1762587208102
+          }
+        },
+        "value": 1
+      },
+      "water_timer_liters": {
+        "value": 94.07182
+      }
+    }
+  },
+  "sensor3": {
+    "-00003": {
+      "control_switch": {
+        "value": false
+      },
+      "water_alerts": {
+        "-OaPDwOJbHqSlNSDGNto": {
+          "message": "🚨 Water flow detected while switch is OFF!",
+          "pulses": 32,
+          "timestamp": 1759229232724
+        },
+        "alert_1759229027326": {
+          "message": "Welcome! We're so glad to have you here.",
+          "pulses": 0,
+          "timestamp": 1759229027326
+        }
+      },
+      "water_timer_counter": {
+        "logs": {
+          "-OaPDjfF0kFbDgBesVb8": {
+            "liters": 0.06222,
+            "pulses": 28,
+            "timestamp": 1759229180624
+          },
+          "-OaPDjtrG0FtCCFPoxGS": {
+            "liters": 0.12222,
+            "pulses": 27,
+            "timestamp": 1759229181559
+          },
+          "-OaPDrDcc7isGpEtu7l7": {
+            "liters": 0.19333,
+            "pulses": 32,
+            "timestamp": 1759229211561
+          },
+          "-OaPDwRUz8qaMliyLzG7": {
+            "liters": 0.30667,
+            "pulses": 51,
+            "timestamp": 1759229232927
+          },
+          "-OaPGOAglf9ghyFgMa0H": {
+            "liters": 0.43111,
+            "pulses": 56,
+            "timestamp": 1759229874924
+          },
+          "-OaPGTR_k0pW0JbGyvoE": {
+            "liters": 0.48889,
+            "pulses": 26,
+            "timestamp": 1759229896485
+          },
+          "-OaPJvNzgAZag1tDfaR9": {
+            "liters": 0.49111,
+            "pulses": 1,
+            "timestamp": 1759230801472
+          },
+          "exampleLog1": {
+            "pulses": 5,
+            "timestamp": 1759229027326
+          },
+          "exampleLog2": {
+            "pulses": 8,
+            "timestamp": 1759229028326
+          }
+        },
+        "value": 88
+      },
+      "water_timer_liters": {
+        "value": 0.49111
+      }
+    },
+    "water_alerts": {
+      "-OcpXfxgm0NS7uVyK8gN": {
+        "message": "Your billing has been reset by the employee",
+        "timestamp": 1761834876850
+      }
+    }
+  },
+  "sensor4": {
+    "-00004": {
+      "control_switch": {
+        "value": true
+      },
+      "water_alerts": {
+        "alert_1762675539932": {
+          "message": "Welcome! We're so glad to have you here.",
+          "pulses": 0,
+          "timestamp": 1762675539932
+        }
+      },
+      "water_timer_counter": {
+        "logs": {
+          "exampleLog1": {
+            "pulses": 5,
+            "timestamp": 1762675539932
+          },
+          "exampleLog2": {
+            "pulses": 8,
+            "timestamp": 1762675540932
+          }
+        },
+        "value": 0
+      }
+    }
+  },
+  "sensor6": {
+    "-00006": {
+      "control_switch": {
+        "value": true
+      },
+      "water_alerts": {
+        "-OdHpTwAdCVCCStOWNkU": {
+          "message": "🚨 Water flow detected while switch is OFF!",
+          "pulses": 6,
+          "timestamp": 1762326343435
+        },
+        "-OdHqHIrFX4j-ufekIx-": {
+          "message": "🚨 Water flow detected while switch is OFF!",
+          "pulses": 70,
+          "timestamp": 1762326553847
+        },
+        "-OdHqSokmWMQ26j9fChm": {
+          "message": "🚨 Water flow detected while switch is OFF!",
+          "pulses": 9,
+          "timestamp": 1762326601008
+        },
+        "-OdHrxkEipu5t4zbAf8e": {
+          "message": "🚨 Water flow detected while switch is OFF!",
+          "pulses": 59,
+          "timestamp": 1762326993935
+        },
+        "-OdHtjG60RUycyB-6ir1": {
+          "message": "🚨 Water flow detected while switch is OFF!",
+          "pulses": 48,
+          "timestamp": 1762327458888
+        },
+        "-OdHuPFVU6NiGwZISLMB": {
+          "message": "🚨 Water flow detected while switch is OFF!",
+          "pulses": 39,
+          "timestamp": 1762327634976
+        },
+        "-OdHvuc1DGU5lAWHzowK": {
+          "message": "🚨 Water flow detected while switch is OFF!",
+          "pulses": 51,
+          "timestamp": 1762328029698
+        },
+        "-OdI1DgSf2IQelFRBtVf": {
+          "message": "🚨 Water flow detected while switch is OFF!",
+          "pulses": 30,
+          "timestamp": 1762329684766
+        },
+        "-OdMespV2tRRUqBtQcc-": {
+          "message": "🚨 Water flow detected while switch is OFF!",
+          "pulses": 16,
+          "timestamp": 1762407452000
+        },
+        "-OdMeymwup08yTZQ8wiG": {
+          "message": "🚨 Water flow detected while switch is OFF!",
+          "pulses": 45,
+          "timestamp": 1762407476413
+        },
+        "-OdMf4gURT0G0u3PT5zj": {
+          "message": "🚨 Water flow detected while switch is OFF!",
+          "pulses": 49,
+          "timestamp": 1762407504671
+        },
+        "-OdMfC43OcbrXiH2v8FB": {
+          "message": "🚨 Water flow detected while switch is OFF!",
+          "pulses": 47,
+          "timestamp": 1762407534917
+        },
+        "-OdMfJ4Edbt0ceKXl1YC": {
+          "message": "🚨 Water flow detected while switch is OFF!",
+          "pulses": 16,
+          "timestamp": 1762407563599
+        },
+        "-OdMfQiyhxRljpV9D2mg": {
+          "message": "🚨 Water flow detected while switch is OFF!",
+          "pulses": 16,
+          "timestamp": 1762407594942
+        },
+        "-OdMfbSGyq9pmo0q8Lyo": {
+          "message": "🚨 Water flow detected while switch is OFF!",
+          "pulses": 32,
+          "timestamp": 1762407642961
+        },
+        "-OdMo2836R3g6gRBh839": {
+          "message": "🚨 Water flow detected while switch is OFF!",
+          "pulses": 38,
+          "timestamp": 1762409853508
+        },
+        "-OdMoFA25ba2skoVxM8j": {
+          "message": "🚨 Water flow detected while switch is OFF!",
+          "pulses": 1,
+          "timestamp": 1762409906883
+        },
+        "-OdMohnbkyFdsZ8VdAq3": {
+          "message": "🚨 Water flow detected while switch is OFF!",
+          "pulses": 1,
+          "timestamp": 1762410028263
+        }
+      },
+      "water_timer_counter": {
+        "logs": {
+          "-Od92GgHlkjgQaX1g4EF": {
+            "liters": 0.00222,
+            "pulses": 1,
+            "timestamp": 1762178964242
+          },
+          "-Od92MYGLkboDEbRlqC0": {
+            "liters": 0.04222,
+            "pulses": 18,
+            "timestamp": 1762178988241
+          },
+          "-Od92PToo7XtGFJ9stkS": {
+            "liters": 0.04444,
+            "pulses": 1,
+            "timestamp": 1762179000244
+          },
+          "-Od92Q-EAmTUszB1mQPm": {
+            "liters": 0.04667,
+            "pulses": 1,
+            "timestamp": 1762179002383
+          },
+          "-Od92Zj-vPuYy0t-DRB5": {
+            "liters": 0.24222,
+            "pulses": 88,
+            "timestamp": 1762179042240
+          },
+          "-Od92ZyWh5lg209QcE_x": {
+            "liters": 0.25111,
+            "pulses": 4,
+            "timestamp": 1762179043233
+          },
+          "-Od92bA7adtZ342ZTC_Q": {
+            "liters": 0.26222,
+            "pulses": 5,
+            "timestamp": 1762179052232
+          },
+          "-Od92bPr_A9Z1D6OadrO": {
+            "liters": 0.36,
+            "pulses": 44,
+            "timestamp": 1762179053240
+          },
+          "-Od92fgTmC1WVDvM2ZEh": {
+            "liters": 0.41333,
+            "pulses": 24,
+            "timestamp": 1762179070750
+          },
+          "-Od92fwBByMRlODB3Gy7": {
+            "liters": 0.46444,
+            "pulses": 23,
+            "timestamp": 1762179071756
+          },
+          "-Od92gAjxOrDC4xUwvgf": {
+            "liters": 0.48444,
+            "pulses": 9,
+            "timestamp": 1762179072751
+          },
+          "-Od92hOtcM9FT0trS8Bp": {
+            "liters": 0.48667,
+            "pulses": 1,
+            "timestamp": 1762179077753
+          },
+          "-Od92hdPIytXd7U_B6Dc": {
+            "liters": 0.53778,
+            "pulses": 23,
+            "timestamp": 1762179078746
+          },
+          "-Od92irWfJ8KRv4Swbl1": {
+            "liters": 0.54,
+            "pulses": 1,
+            "timestamp": 1762179083745
+          },
+          "-Od92jLt3ywghK7rld7r": {
+            "liters": 0.55333,
+            "pulses": 6,
+            "timestamp": 1762179085753
+          },
+          "-Od92jaOK47lLRYq5pzH": {
+            "liters": 0.56,
+            "pulses": 3,
+            "timestamp": 1762179086746
+          },
+          "-Od92jqBWsEpEgq7fSLA": {
+            "liters": 0.60222,
+            "pulses": 19,
+            "timestamp": 1762179087756
+          },
+          "-Od92lIu6dOTiy4UpRYb": {
+            "liters": 0.62222,
+            "pulses": 9,
+            "timestamp": 1762179093754
+          },
+          "-Od92lYe8kByVEZw4ULV": {
+            "liters": 0.64444,
+            "pulses": 10,
+            "timestamp": 1762179094763
+          },
+          "-Od92lnCWf1zhtuzoCk3": {
+            "liters": 0.69111,
+            "pulses": 21,
+            "timestamp": 1762179095757
+          },
+          "-Od92m207o6u3oroAeu4": {
+            "liters": 0.69778,
+            "pulses": 3,
+            "timestamp": 1762179096770
+          },
+          "-Od92oigpBv22uuLAvlS": {
+            "liters": 0.70667,
+            "pulses": 4,
+            "timestamp": 1762179107756
+          },
+          "-Od92oy6fplmqkaRmLJK": {
+            "liters": 0.77111,
+            "pulses": 29,
+            "timestamp": 1762179108743
+          },
+          "-Od92qfd5dlUi-ZKdnyl": {
+            "liters": 0.78,
+            "pulses": 4,
+            "timestamp": 1762179115753
+          },
+          "-Od92qvPUgLkMe6N9TOm": {
+            "liters": 0.84,
+            "pulses": 27,
+            "timestamp": 1762179116762
+          },
+          "-Od92zTKcmCiiUVoVoTK": {
+            "liters": 0.84222,
+            "pulses": 1,
+            "timestamp": 1762179151766
+          },
+          "-Od9327PjIRlR-LrizMC": {
+            "liters": 0.95778,
+            "pulses": 52,
+            "timestamp": 1762179166746
+          },
+          "-OdRc_5xlQZ8sK1mPPnM": {
+            "liters": 193.55116,
+            "pulses": 42,
+            "timestamp": 1762490732989
+          }
+        },
+        "value": 0
+      },
+      "water_timer_liters": {
+        "value": 193.55116
+      }
+    },
+    "--00006": {
+      "control_switch": {
+        "value": true
+      },
+      "water_alerts": {
+        "alert_1762179324891": {
+          "message": "Welcome! We're so glad to have you here.",
+          "pulses": 0,
+          "timestamp": 1762179324891
+        }
+      },
+      "water_timer_counter": {
+        "logs": {
+          "exampleLog1": {
+            "pulses": 5,
+            "timestamp": 1762179324891
+          },
+          "exampleLog2": {
+            "pulses": 8,
+            "timestamp": 1762179325891
+          }
+        },
+        "value": 0
+      }
+    }
+  },
+  "tokens": {
+    "-Ob8SLG6JIB-YbYp0ycP": "fMLnZqHO8kickiDKTAVyQ8:APA91bHZ8MuSlhIZC6lctTebRugNUaYj5bA7upHLgQZwWQwPFLfDsQTDA-2MwAcjYPIQQ19flpOzC_tPM4kj2kdPmSSX7LgE96vhhQqwaJ5axDg_OBSjGOo",
+    "e8j-As_L_WErQwO8Xv_Qo9:APA91bGYrkPJ7AKAu6dNUoxLSEL19c3arGL7hndkW7BRcymTmF9bPSR4TuqG_N7TfZIogc6wbUy-nS9O8AuZmfUh3Y0lKTBzpgvdByZq3zjyNhGR3QQrqYU": "e8j-As_L_WErQwO8Xv_Qo9:APA91bGYrkPJ7AKAu6dNUoxLSEL19c3arGL7hndkW7BRcymTmF9bPSR4TuqG_N7TfZIogc6wbUy-nS9O8AuZmfUh3Y0lKTBzpgvdByZq3zjyNhGR3QQrqYU"
+  },
+  "users": {
+    "-00006": {
+      "address": "Bucanan",
+      "alertPath": "sensor6/-00006/water_alerts",
+      "logPath": "sensor6/-00006/water_timer_counter/logs",
+      "password": "Gaddi Crisanto",
+      "role": "residence",
+      "sensorPath": "sensor6/-00006/water_timer_counter/value",
+      "sensorRoot": "sensor6",
+      "switchPath": "sensor6/-00006/control_switch/value",
+      "username": "Gaddi Crisanto"
+    },
+    "-00004": {
+      "address": "Bucanan Magalang pampanga",
+      "alertPath": "sensor4/-00004/water_alerts",
+      "logPath": "sensor4/-00004/water_timer_counter/logs",
+      "password": "Kenrick Abagon",
+      "role": "residence",
+      "sensorPath": "sensor4/-00004/water_timer_counter/value",
+      "sensorRoot": "sensor4",
+      "switchPath": "sensor4/-00004/control_switch/value",
+      "username": "Kenrick Abagon"
+    },
+    "-00003": {
+      "address": "Ayala magalang pampanga",
+      "alertPath": "sensor3/-00003/water_alerts",
+      "logPath": "sensor3/-00003/water_timer_counter/logs",
+      "password": "cerilo",
+      "role": "residence",
+      "sensorPath": "sensor3/-00003/water_timer_counter/value",
+      "sensorRoot": "sensor3",
+      "switchPath": "sensor3/-00003/control_switch/value",
+      "username": "cerilo"
+    },
+    "-00002": {
+      "address": "Purok 2 santo NIno",
+      "alertPath": "sensor2/-00002/water_alerts",
+      "logPath": "sensor2/-00002/water_timer_counter/logs",
+      "password": "liam",
+      "role": "residence",
+      "sensorPath": "sensor2/-00002/water_timer_counter/value",
+      "sensorRoot": "sensor2",
+      "switchPath": "sensor2/-00002/control_switch/value",
+      "username": "liam"
+    },
+    "-OdbbkxpwKoVo40hmbsS": {
+      "password": "tris",
+      "role": "admin",
+      "username": "tris"
+    },
+    "-UID234567": {
+      "password": "liam",
+      "role": "admin",
+      "username": "Liam"
+    },
+    "-UID345678": {
+      "password": "cer",
+      "role": "employee",
+      "username": "cer"
+    }
+  },
+  "water_usage": {
+    "Residence": {
+      "2025": {
+        "October": {
+          "cubic_meters": 0,
+          "liters": 0
+        }
+      }
+    },
+    "cerilo": {
+      "2025": {
+        "October": {
+          "-ObSQny0o2DIsqtbS6Zw": {
+            "consumption": 88,
+            "timestamp": 1760356679573
+          },
+          "-ObSQsoDMGg6rNpKGcNM": {
+            "consumption": 88,
+            "timestamp": 1760356699428
+          },
+          "-ObSR2ILj1GWJR7PE6vw": {
+            "consumption": 88,
+            "timestamp": 1760356742379
+          },
+          "-ObSR5RU6bkckNoo7tBQ": {
+            "consumption": 88,
+            "timestamp": 1760356755252
+          }
+        }
+      }
+    },
+    "liam": {
+      "2025": {
+        "October": {
+          "-ObSOIu0EODV54LQRxUf": {
+            "consumption": 0,
+            "timestamp": 1760356023957
+          },
+          "-ObSOUg2PAr4dTip6hTk": {
+            "consumption": 0,
+            "timestamp": 1760356072215
+          },
+          "-ObSOlYL6hYlkCY956JH": {
+            "consumption": 0,
+            "timestamp": 1760356145383
+          },
+          "-ObSPdVvbjzdOxlcAtfw": {
+            "consumption": 0,
+            "timestamp": 1760356374612
+          },
+          "-ObSPp8EYrHvzuwQWp1l": {
+            "consumption": 0,
+            "timestamp": 1760356422244
+          },
+          "-ObSQVFLAOeDrRqcXlZT": {
+            "consumption": 0,
+            "timestamp": 1760356598826
+          },
+          "1760356565673": {
+            "consumption": 0.11915594793437176,
+            "date": "10/13/2025",
+            "liters": 119.15594793437175,
+            "timestamp": 1760356565673
+          }
+        }
+      }
+    },
+    "tristan": {
+      "2025": {
+        "October": {
+          "cubic_meters": 0,
+          "liters": 0
+        }
+      }
+    }
+  }
+}
